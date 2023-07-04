@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: debt-manager
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: debt-manager
+  template:
+    metadata:
+      labels:
+        app: debt-manager
+    spec:
+      containers:
+        - name: debt-manager
+          image: leandro/debt-manager:v1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres-db-service:5432/debtmanager
+            - name: SPRING_DATASOURCE_USERNAME
+              value: leandro
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: senha

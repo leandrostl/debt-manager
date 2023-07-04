@@ -1,0 +1,30 @@
+version: '3.1'
+services:
+  debtmanager:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/debtmanager
+      - SPRING_DATASOURCE_USERNAME=leandro
+      - SPRING_DATASOURCE_PASSWORD=senha
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=leandro
+      - POSTGRES_PASSWORD=senha
+      - POSTGRES_DB=debtmanager
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
