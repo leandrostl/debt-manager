@@ -9,6 +9,16 @@ O Debt Manager testa várias tecnologias interessantes:
 * Banco de Dados Postgres
 
 ## Como executar
+### TL;DR
+Com [Docker](https://docs.docker.com/engine/install/ubuntu/), [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
+e [Minikube](https://minikube.sigs.k8s.io/docs/start/) instalados, no terminal, execute os comandos: 
+comando:
+1. `chmod +x deploy/deploy.sh`
+2. `./deploy/deploy.sh`
+
+É interessante abrir o dashboard do kubernetes executando o comando `minikube dashboard`.
+
+Para finalizar todos os recursos, execute: `minikube delete --all`.
 
 ### Aplicação
 * Faça o build da aplicação, no terminal, execute `./gradlew clean build -x test`
@@ -25,7 +35,6 @@ O Debt Manager testa várias tecnologias interessantes:
    * **Aguarde a aplicação ficar estável no cluster:** Abra o dashboard e veja o status do serviço de banco de dados
    ![](images/stable-postgres.png)
 1. **Rodando a aplicação debt manager:** execute, no terminal, `kubectl apply -f deploy/deployment.yaml`
-1. **Exponha a porta para o serviço:** execute o comando `kubectl expose deployment debt-manager --type=NodePort --port=8080`
-1. **Obtenha o ip do container da aplicação:** Execute o comando `minkube service debt-manager`. Esse comando 
+1. **Obtenha o ip do container da aplicação:** execute o comando `minkube service debt-manager`. Esse comando 
 irá fornecer o ip do container e a porta mapeada para a `8080` da aplicação.
 1. **Finalizando a aplicação e removendo os recursos:** Execute `minikube delete --all`
